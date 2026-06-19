@@ -1,9 +1,11 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 3;
     public float damageCooldown = 1f;
+    public TextMeshProUGUI gameOverText;
     private int currentHealth;
     private float lastDamageTime;
 
@@ -24,10 +26,11 @@ public class PlayerHealth : MonoBehaviour
                 Debug.Log("Health: " + currentHealth);
 
                 if (currentHealth <= 0)
-                {
-                    Debug.Log("Game Over!");
-                    gameObject.SetActive(false);
-                }
+{
+    gameOverText.gameObject.SetActive(true);
+    gameObject.SetActive(false);
+    FindObjectOfType<EnemySpawner>().enabled = false;
+}
             }
         }
     }
