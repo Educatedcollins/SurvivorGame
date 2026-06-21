@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -12,12 +13,13 @@ public class PlayerHealth : MonoBehaviour
     private float lastDamageTime;
     private bool isDead = false;
     private float deathTime;
-    
+    private SpriteRenderer sr;
 
     void Start()
     {
         currentHealth = maxHealth;
         lastDamageTime = -damageCooldown;
+        sr = GetComponent<SpriteRenderer>();
         UpdateHealthText();
     }
 
@@ -32,31 +34,40 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-void OnCollisionStay2D(Collision2D collision)
-{
-    if (isDead) return;
-
-    if (collision.gameObject.CompareTag("Enemy"))
+    void OnCollisionStay2D(Collision2D collision)
     {
-        if (Time.time >= lastDamageTime + damageCooldown)
-        {
-            currentHealth--;
-            lastDamageTime = Time.time;
-            UpdateHealthText();
+        if (isDead) return;
 
-            if (currentHealth <= 0)
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (Time.time >= lastDamageTime + damageCooldown)
             {
-                gameOverText.gameObject.SetActive(true);
-                GetComponent<SpriteRenderer>().enabled = false;
-                GetComponent<PlayerMovement>().canMove = false;
-                FindFirstObjectByType<EnemySpawner>().enabled = false;
-                ScoreManager.instance.gameOver = true;
-                isDead = true;
-                deathTime = Time.time;
+                currentHealth--;
+                lastDamageTime = Time.time;
+                UpdateHealthText();
+                StartCoroutine(FlashRed());
+
+                if (currentHealth <= 0)
+                {
+                    gameOverText.gameObject.SetActive(true);
+                    sr.enabled = false;
+                    GetComponent<PlayerMovement>().canMove = false;
+                    FindFirstObjectByType<EnemySpawner>().enabled = false;
+                    ScoreManager.instance.gameOver = true;
+                    isDead = true;
+                    deathTime = Time.time;
+                }
             }
         }
     }
-}
+
+    IEnumerator FlashRed()
+    {
+        Color originalColor = sr.color;
+        sr.color = Color.red;
+        yield return new WaitForSeconds(0.15f);
+        sr.color = originalColor;
+    }
 
     void ReturnToMenu()
     {
