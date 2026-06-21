@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class PlayerHealth : MonoBehaviour
     public TextMeshProUGUI healthText;
     private int currentHealth;
     private float lastDamageTime;
+    private bool isDead = false;
+    private float deathTime;
+    
 
     void Start()
     {
@@ -17,25 +21,46 @@ public class PlayerHealth : MonoBehaviour
         UpdateHealthText();
     }
 
-    void OnCollisionStay2D(Collision2D collision)
+    void Update()
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (isDead && Time.time >= deathTime + 1f)
         {
-            if (Time.time >= lastDamageTime + damageCooldown)
+            if (Input.anyKeyDown)
             {
-                currentHealth--;
-                lastDamageTime = Time.time;
-                UpdateHealthText();
-
-                if (currentHealth <= 0)
-                {
-                    gameOverText.gameObject.SetActive(true);
-                    gameObject.SetActive(false);
-                    FindObjectOfType<EnemySpawner>().enabled = false;
-                    ScoreManager.instance.gameOver = true;
-                }
+                ReturnToMenu();
             }
         }
+    }
+
+void OnCollisionStay2D(Collision2D collision)
+{
+    if (isDead) return;
+
+    if (collision.gameObject.CompareTag("Enemy"))
+    {
+        if (Time.time >= lastDamageTime + damageCooldown)
+        {
+            currentHealth--;
+            lastDamageTime = Time.time;
+            UpdateHealthText();
+
+            if (currentHealth <= 0)
+            {
+                gameOverText.gameObject.SetActive(true);
+                GetComponent<SpriteRenderer>().enabled = false;
+                GetComponent<PlayerMovement>().canMove = false;
+                FindFirstObjectByType<EnemySpawner>().enabled = false;
+                ScoreManager.instance.gameOver = true;
+                isDead = true;
+                deathTime = Time.time;
+            }
+        }
+    }
+}
+
+    void ReturnToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     void UpdateHealthText()

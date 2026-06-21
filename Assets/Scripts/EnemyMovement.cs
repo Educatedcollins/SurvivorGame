@@ -6,16 +6,22 @@ public class EnemyMovement : MonoBehaviour
     private Transform player;
 
     void Start()
+{
+    GameObject playerObj = GameObject.FindWithTag("Player");
+    if (playerObj != null)
     {
-        player = GameObject.FindWithTag("Player").transform;
+        player = playerObj.transform;
     }
+}
 
     void Update()
-    {
-        Vector2 direction = GetWrappedDirection();
-        transform.position = (Vector2)transform.position + direction * speed * Time.deltaTime;
-        Wrap();
-    }
+{
+    if (player == null) return;
+
+    Vector2 direction = GetWrappedDirection();
+    transform.position = (Vector2)transform.position + direction * speed * Time.deltaTime;
+    Wrap();
+}
 
     Vector2 GetWrappedDirection()
     {

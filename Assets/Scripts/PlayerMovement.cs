@@ -3,9 +3,12 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
+    public bool canMove = true;
 
     void Update()
     {
+        if (!canMove) return;
+
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
 
@@ -15,15 +18,15 @@ public class PlayerMovement : MonoBehaviour
         Wrap();
     }
 
-void Wrap()
-{
-    Vector2 pos = transform.position;
+    void Wrap()
+    {
+        Vector2 pos = transform.position;
 
-    if (pos.x > 8.9f) pos.x = -8.9f;
-    if (pos.x < -8.9f) pos.x = 8.9f;
-    if (pos.y > 5f) pos.y = -5f;
-    if (pos.y < -5f) pos.y = 5f;
+        if (pos.x > 8.9f) pos.x = -8.9f;
+        if (pos.x < -8.9f) pos.x = 8.9f;
+        if (pos.y > 5f) pos.y = -5f;
+        if (pos.y < -5f) pos.y = 5f;
 
-    transform.position = pos;
-}
+        transform.position = pos;
+    }
 }
