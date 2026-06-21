@@ -6,6 +6,7 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 3;
     public float damageCooldown = 1f;
     public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI healthText;
     private int currentHealth;
     private float lastDamageTime;
 
@@ -13,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
         lastDamageTime = -damageCooldown;
+        UpdateHealthText();
     }
 
     void OnCollisionStay2D(Collision2D collision)
@@ -23,15 +25,21 @@ public class PlayerHealth : MonoBehaviour
             {
                 currentHealth--;
                 lastDamageTime = Time.time;
-                Debug.Log("Health: " + currentHealth);
+                UpdateHealthText();
 
                 if (currentHealth <= 0)
-{
-    gameOverText.gameObject.SetActive(true);
-    gameObject.SetActive(false);
-    FindObjectOfType<EnemySpawner>().enabled = false;
-}
+                {
+                    gameOverText.gameObject.SetActive(true);
+                    gameObject.SetActive(false);
+                    FindObjectOfType<EnemySpawner>().enabled = false;
+                    ScoreManager.instance.gameOver = true;
+                }
             }
         }
+    }
+
+    void UpdateHealthText()
+    {
+        healthText.text = "Health: " + currentHealth;
     }
 }

@@ -9,6 +9,11 @@ public class EnemySpawner : MonoBehaviour
     public float warningDuration = 1.5f;
     private float lastSpawnTime;
 
+    void Start()
+    {
+        lastSpawnTime = -warningDuration;
+    }
+
     void Update()
     {
         if (Time.time >= lastSpawnTime + spawnInterval)
