@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 3;
     public float damageCooldown = 1f;
     public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI continueText;
     public TextMeshProUGUI healthText;
     private int currentHealth;
     private float lastDamageTime;
@@ -27,6 +28,11 @@ public class PlayerHealth : MonoBehaviour
     {
         if (isDead && Time.time >= deathTime + 1f)
         {
+            if (!continueText.gameObject.activeSelf)
+            {
+                continueText.gameObject.SetActive(true);
+            }
+
             if (Input.anyKeyDown)
             {
                 ReturnToMenu();
