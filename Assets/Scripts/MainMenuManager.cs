@@ -7,4 +7,10 @@ public class MainMenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");
     }
+
+    public void OpenOptions()
+{
+    PlayerPrefs.SetString("PreviousScene", "MainMenu");
+    SceneManager.LoadScene("Options");
+}
 }

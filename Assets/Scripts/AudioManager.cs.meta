@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6fdc0fd470f4e5147b8bb726e5d548d2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - damageSound: {instanceID: 0}
+  - spawnSound: {instanceID: 0}
+  - backgroundMusic: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

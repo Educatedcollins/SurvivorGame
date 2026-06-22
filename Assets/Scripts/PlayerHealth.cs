@@ -15,6 +15,7 @@ public class PlayerHealth : MonoBehaviour
     private bool isDead = false;
     private float deathTime;
     private SpriteRenderer sr;
+    private ParticleSystem damageParticles;
 
     void Start()
     {
@@ -22,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
         lastDamageTime = -damageCooldown;
         sr = GetComponent<SpriteRenderer>();
         UpdateHealthText();
+        damageParticles = GetComponentInChildren<ParticleSystem>();
     }
 
     void Update()
@@ -51,6 +53,8 @@ public class PlayerHealth : MonoBehaviour
                 currentHealth--;
                 lastDamageTime = Time.time;
                 UpdateHealthText();
+                AudioManager.instance.PlayDamageSound();
+                damageParticles.Play();
                 StartCoroutine(FlashRed());
 
                 if (currentHealth <= 0)

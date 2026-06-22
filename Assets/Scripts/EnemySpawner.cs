@@ -26,10 +26,10 @@ public class EnemySpawner : MonoBehaviour
     }
 
     IEnumerator SpawnWithWarning(Vector2 spawnPos)
-    {
-        GameObject warning = Instantiate(warningPrefab, spawnPos, Quaternion.identity);
-        yield return new WaitForSeconds(warningDuration);
-        Destroy(warning);
-        Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-    }
+{
+    GameObject warning = Instantiate(warningPrefab, spawnPos, Quaternion.identity);
+    yield return new WaitForSeconds(warningDuration);
+    Destroy(warning);
+    Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+}
 }
