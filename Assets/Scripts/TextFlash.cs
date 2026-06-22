@@ -13,7 +13,7 @@ public class TextFlash : MonoBehaviour
 
     void Update()
     {
-        float alpha = Mathf.Abs(Mathf.Sin(Time.time * flashSpeed));
+        float alpha = Mathf.Abs(Mathf.Sin(Time.unscaledTime * flashSpeed));
         Color color = text.color;
         color.a = alpha;
         text.color = color;
