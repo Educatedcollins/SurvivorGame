@@ -67,6 +67,11 @@ public class PlayerHealth : MonoBehaviour
                     ScoreManager.instance.gameOver = true;
                     isDead = true;
                     deathTime = Time.time;
+                    // Hide glow effects
+                    Transform glow = transform.Find("PlayerGlow");
+                    Transform light = transform.Find("Light 2D");
+                    if (glow != null) glow.gameObject.SetActive(false);
+                    if (light != null) light.gameObject.SetActive(false);
                 }
             }
         }
