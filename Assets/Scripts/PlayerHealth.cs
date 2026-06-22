@@ -59,6 +59,7 @@ public class PlayerHealth : MonoBehaviour
 
                 if (currentHealth <= 0)
                 {
+                    ScoreManager.instance.SaveScore();
                     gameOverText.gameObject.SetActive(true);
                     sr.enabled = false;
                     GetComponent<PlayerMovement>().canMove = false;

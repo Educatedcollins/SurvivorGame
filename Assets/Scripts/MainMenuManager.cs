@@ -13,6 +13,11 @@ public class MainMenuManager : MonoBehaviour
     PlayerPrefs.SetString("PreviousScene", "MainMenu");
     SceneManager.LoadScene("Options");
 }
+public void OpenRecords()
+{
+    PlayerPrefs.SetString("PreviousScene", "MainMenu");
+    SceneManager.LoadScene("Records");
+}
 public void QuitGame()
 {
     Application.Quit();
